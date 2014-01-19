@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<SupportedJobs>
-	<Job>
-		<JobId>CDI Build</JobId>
-	</Job>
-	<Job>
-		<JobId>Local Build</JobId>
-	</Job>
-</SupportedJobs>
