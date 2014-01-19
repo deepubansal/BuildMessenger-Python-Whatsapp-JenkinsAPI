@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Users>
+	<User>
+		<Name>Deepak</Name>
+		<Number>919911311169</Number>
+		<RegisteredJob>
+			<JobId>Local Build</JobId>
+		</RegisteredJob>
+	</User>
+	<!-- <User>
+		<Name>Priyank</Name>
+		<Number>918527281044</Number>
+		<RegisteredJob>
+			<JobId>CDI Build</JobId>
+		</RegisteredJob>
+	</User> -->
+</Users>
