@@ -5,6 +5,8 @@ import javax.xml.bind.annotation.XmlElement;
 public class JobDto {
 
     private String jobId;
+    
+    private boolean isParameterizedJob;
 
     @XmlElement(name = "JobId")
     public String getJobId() {
@@ -15,6 +17,8 @@ public class JobDto {
         this.jobId = jobId;
     }
 
+
+    
     @Override
     public int hashCode() {
         // TODO Auto-generated method stub
@@ -50,5 +54,14 @@ public class JobDto {
     @Override
     public String toString() {
         return jobId;
+    }
+
+    @XmlElement(name = "IsParameterizedJob")
+    public boolean isParameterizedJob() {
+        return isParameterizedJob;
+    }
+
+    public void setParameterizedJob(boolean isParameterizedJob) {
+        this.isParameterizedJob = isParameterizedJob;
     }
 }

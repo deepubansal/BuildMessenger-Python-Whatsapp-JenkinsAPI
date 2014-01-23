@@ -6,6 +6,9 @@
 		<RegisteredJob>
 			<JobId>Local Build</JobId>
 		</RegisteredJob>
+		<RegisteredJob>
+			<JobId>Local Build With Parameters</JobId>
+		</RegisteredJob>
 	</User>
 	<!-- <User>
 		<Name>Priyank</Name>

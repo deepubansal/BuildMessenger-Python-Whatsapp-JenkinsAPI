@@ -24,7 +24,7 @@ public class BuildListener implements Runnable {
         try {
             while (buildphase != BuildPhase.LEFTQUEUE) {
                 int failedAttempts = 0;
-                String response2 = getResponse(location + "api/xml");// ?xpath=leftItem/task/color/text()");
+                String response2 = getResponse(new String[]{location + "api/xml"}, null);// ?xpath=leftItem/task/color/text()");
                 System.out.println(response2);
                 if (checkWaiting(response2))
                     buildphase = BuildPhase.WAITING;

@@ -91,7 +91,7 @@ public class MessageAPI extends Thread{
         ComposedMessage composedMessage = new ComposedMessage(fileName, message, numbers);
         fileName = Configurations.TEMP_DIR + fileName;
 
-        FileUtil.writeToFile(fileName, message);
+        FileUtil.writeToFile(fileName, message, false);
         outgoingMessageQueue.put(composedMessage);
         while (!receipts.contains(composedMessage))
             Thread.sleep(100);

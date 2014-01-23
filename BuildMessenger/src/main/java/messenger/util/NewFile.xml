@@ -1,0 +1,390 @@
+<hudson>
+	<assignedLabel></assignedLabel>
+	<mode>NORMAL</mode>
+	<nodeDescription>the master Jenkins node</nodeDescription>
+	<nodeName></nodeName>
+	<numExecutors>4</numExecutors>
+	<description>&lt;b&gt;SLAVE:&lt;/b&gt; Various Java builds for HI and
+		Xebia.</description>
+	<job>
+		<name>Address Pluggable</name>
+		<url>http://ci.humaninference.com/job/Address%20Pluggable/</url>
+		<color>disabled</color>
+	</job>
+	<job>
+		<name>Address-formatconverter</name>
+		<url>http://ci.humaninference.com/job/Address-formatconverter/</url>
+		<color>blue</color>
+	</job>
+	<job>
+		<name>address-i18n</name>
+		<url>http://ci.humaninference.com/job/address-i18n/</url>
+		<color>blue</color>
+	</job>
+	<job>
+		<name>Apache MetaModel</name>
+		<url>http://ci.humaninference.com/job/Apache%20MetaModel/</url>
+		<color>yellow</color>
+	</job>
+	<job>
+		<name>Banking</name>
+		<url>http://ci.humaninference.com/job/Banking/</url>
+		<color>blue</color>
+	</job>
+	<job>
+		<name>beanmapper</name>
+		<url>http://ci.humaninference.com/job/beanmapper/</url>
+		<color>blue</color>
+	</job>
+	<job>
+		<name>brokerservice</name>
+		<url>http://ci.humaninference.com/job/brokerservice/</url>
+		<color>blue</color>
+	</job>
+	<job>
+		<name>Build HIqww</name>
+		<url>http://ci.humaninference.com/job/Build%20HIqww/</url>
+		<color>blue</color>
+	</job>
+	<job>
+		<name>Build MapReduce</name>
+		<url>http://ci.humaninference.com/job/Build%20MapReduce/</url>
+		<color>blue</color>
+	</job>
+	<job>
+		<name>Build MapReduce Backward Compatibility Version</name>
+		<url>http://ci.humaninference.com/job/Build%20MapReduce%20Backward%20Compatibility%20Version/
+		</url>
+		<color>blue</color>
+	</job>
+	<job>
+		<name>Build MapReduce Server PoC</name>
+		<url>http://ci.humaninference.com/job/Build%20MapReduce%20Server%20PoC/
+		</url>
+		<color>disabled</color>
+	</job>
+	<job>
+		<name>Build Suite6 EAR</name>
+		<url>http://ci.humaninference.com/job/Build%20Suite6%20EAR/</url>
+		<color>blue</color>
+	</job>
+	<job>
+		<name>Build-CDI-MapReduce-IntegrationTest-Project</name>
+		<url>http://ci.humaninference.com/job/Build-CDI-MapReduce-IntegrationTest-Project/
+		</url>
+		<color>disabled</color>
+	</job>
+	<job>
+		<name>Build-Deploy-CDI-MapReduce-Project</name>
+		<url>http://ci.humaninference.com/job/Build-Deploy-CDI-MapReduce-Project/
+		</url>
+		<color>disabled</color>
+	</job>
+	<job>
+		<name>Bxe</name>
+		<url>http://ci.humaninference.com/job/Bxe/</url>
+		<color>blue</color>
+	</job>
+	<job>
+		<name>Caution - Deploy on Production</name>
+		<url>http://ci.humaninference.com/job/Caution%20-%20Deploy%20on%20Production/
+		</url>
+		<color>blue</color>
+	</job>
+	<job>
+		<name>cbsdedup</name>
+		<url>http://ci.humaninference.com/job/cbsdedup/</url>
+		<color>blue</color>
+	</job>
+	<job>
+		<name>CDI Build</name>
+		<url>http://ci.humaninference.com/job/CDI%20Build/</url>
+		<color>blue_anime</color>
+	</job>
+	<job>
+		<name>CDI Build - OLD</name>
+		<url>http://ci.humaninference.com/job/CDI%20Build%20-%20OLD/</url>
+		<color>disabled</color>
+	</job>
+	<job>
+		<name>CDI BUILD 7.4.4 Branch</name>
+		<url>http://ci.humaninference.com/job/CDI%20BUILD%207.4.4%20Branch/
+		</url>
+		<color>notbuilt</color>
+	</job>
+	<job>
+		<name>CDI Build 7.5.5</name>
+		<url>http://ci.humaninference.com/job/CDI%20Build%207.5.5/</url>
+		<color>disabled</color>
+	</job>
+	<job>
+		<name>CDI Build for developers</name>
+		<url>http://ci.humaninference.com/job/CDI%20Build%20for%20developers/
+		</url>
+		<color>blue_anime</color>
+	</job>
+	<job>
+		<name>CDI BUILD UI only</name>
+		<url>http://ci.humaninference.com/job/CDI%20BUILD%20UI%20only/</url>
+		<color>blue</color>
+	</job>
+	<job>
+		<name>CDI Parallel Build</name>
+		<url>http://ci.humaninference.com/job/CDI%20Parallel%20Build/</url>
+		<color>red</color>
+	</job>
+	<job>
+		<name>CDI Proc Deployment</name>
+		<url>http://ci.humaninference.com/job/CDI%20Proc%20Deployment/</url>
+		<color>disabled</color>
+	</job>
+	<job>
+		<name>CDI Proc Deployment Without Config (7.4.4 Branch)</name>
+		<url>http://ci.humaninference.com/job/CDI%20Proc%20Deployment%20Without%20Config%20(7.4.4%20Branch)/
+		</url>
+		<color>disabled</color>
+	</job>
+	<job>
+		<name>CDI Quick build</name>
+		<url>http://ci.humaninference.com/job/CDI%20Quick%20build/</url>
+		<color>blue</color>
+	</job>
+	<job>
+		<name>cdi-create-test-db</name>
+		<url>http://ci.humaninference.com/job/cdi-create-test-db/</url>
+		<color>blue</color>
+	</job>
+	<job>
+		<name>cdi-deploy-service</name>
+		<url>http://ci.humaninference.com/job/cdi-deploy-service/</url>
+		<color>blue</color>
+	</job>
+	<job>
+		<name>CDI-Performance-Test-Default_Configuration</name>
+		<url>http://ci.humaninference.com/job/CDI-Performance-Test-Default_Configuration/
+		</url>
+		<color>blue</color>
+	</job>
+	<job>
+		<name>CDI-POCfriendly build</name>
+		<url>http://ci.humaninference.com/job/CDI-POCfriendly%20build/</url>
+		<color>blue</color>
+	</job>
+	<job>
+		<name>CDI-POCSourceOnlySynch</name>
+		<url>http://ci.humaninference.com/job/CDI-POCSourceOnlySynch/</url>
+		<color>blue</color>
+	</job>
+	<job>
+		<name>CDI-Run job on Perf machine</name>
+		<url>http://ci.humaninference.com/job/CDI-Run%20job%20on%20Perf%20machine/
+		</url>
+		<color>aborted</color>
+	</job>
+	<job>
+		<name>cdi-soapui-Integration-Test-abnapp3</name>
+		<url>http://ci.humaninference.com/job/cdi-soapui-Integration-Test-abnapp3/
+		</url>
+		<color>red</color>
+	</job>
+	<job>
+		<name>cdi-soapui-Integration-Test-mdm4was</name>
+		<url>http://ci.humaninference.com/job/cdi-soapui-Integration-Test-mdm4was/
+		</url>
+		<color>aborted</color>
+	</job>
+	<job>
+		<name>cdi-soapui-Integration-Test-tst4tc</name>
+		<url>http://ci.humaninference.com/job/cdi-soapui-Integration-Test-tst4tc/
+		</url>
+		<color>blue</color>
+	</job>
+	<job>
+		<name>cdi-soapui-Performance-Test-ABNSetup</name>
+		<url>http://ci.humaninference.com/job/cdi-soapui-Performance-Test-ABNSetup/
+		</url>
+		<color>aborted</color>
+	</job>
+	<job>
+		<name>cdi-soapui-Performance-Test-Postgress-Person</name>
+		<url>http://ci.humaninference.com/job/cdi-soapui-Performance-Test-Postgress-Person/
+		</url>
+		<color>blue</color>
+	</job>
+	<job>
+		<name>CDIProc DB Setup</name>
+		<url>http://ci.humaninference.com/job/CDIProc%20DB%20Setup/</url>
+		<color>disabled</color>
+	</job>
+	<job>
+		<name>CDIProc DB Setup New</name>
+		<url>http://ci.humaninference.com/job/CDIProc%20DB%20Setup%20New/
+		</url>
+		<color>disabled</color>
+	</job>
+	<job>
+		<name>CDIProc DB Setup New (Branch 7.4.4)</name>
+		<url>http://ci.humaninference.com/job/CDIProc%20DB%20Setup%20New%20(Branch%207.4.4)/
+		</url>
+		<color>disabled</color>
+	</job>
+	<job>
+		<name>CDIProc Environment Main Build</name>
+		<url>http://ci.humaninference.com/job/CDIProc%20Environment%20Main%20Build/
+		</url>
+		<color>disabled</color>
+	</job>
+	<job>
+		<name>CDIProc Environment Main Build (7.4.4 Branch)</name>
+		<url>http://ci.humaninference.com/job/CDIProc%20Environment%20Main%20Build%20%20(7.4.4%20Branch)/
+		</url>
+		<color>disabled</color>
+	</job>
+	<job>
+		<name>commandline-parser</name>
+		<url>http://ci.humaninference.com/job/commandline-parser/</url>
+		<color>blue</color>
+	</job>
+	<job>
+		<name>commons-hi</name>
+		<url>http://ci.humaninference.com/job/commons-hi/</url>
+		<color>blue</color>
+	</job>
+	<job>
+		<name>CompressionTransformer</name>
+		<url>http://ci.humaninference.com/job/CompressionTransformer/</url>
+		<color>blue</color>
+	</job>
+	<job>
+		<name>country-i18n</name>
+		<url>http://ci.humaninference.com/job/country-i18n/</url>
+		<color>red</color>
+	</job>
+	<job>
+		<name>DataCleaner community packaging</name>
+		<url>http://ci.humaninference.com/job/DataCleaner%20community%20packaging/
+		</url>
+		<color>blue</color>
+	</job>
+	<job>
+		<name>DataCleaner documentation</name>
+		<url>http://ci.humaninference.com/job/DataCleaner%20documentation/
+		</url>
+		<color>blue</color>
+	</job>
+	<job>
+		<name>DataCleaner enterprise edition</name>
+		<url>http://ci.humaninference.com/job/DataCleaner%20enterprise%20edition/
+		</url>
+		<color>red</color>
+	</job>
+	<job>
+		<name>DataCleaner enterprise edition release</name>
+		<url>http://ci.humaninference.com/job/DataCleaner%20enterprise%20edition%20release/
+		</url>
+		<color>red</color>
+	</job>
+	<job>
+		<name>dataimprover-addressww-bundle</name>
+		<url>http://ci.humaninference.com/job/dataimprover-addressww-bundle/
+		</url>
+		<color>blue</color>
+	</job>
+	<job>
+		<name>dataimprover-dao-oracle</name>
+		<url>http://ci.humaninference.com/job/dataimprover-dao-oracle/</url>
+		<color>blue</color>
+	</job>
+	<job>
+		<name>dataimprover-dao-sql2005</name>
+		<url>http://ci.humaninference.com/job/dataimprover-dao-sql2005/</url>
+		<color>blue</color>
+	</job>
+	<job>
+		<name>dataimprover-declare-pricing-ws-bundle</name>
+		<url>http://ci.humaninference.com/job/dataimprover-declare-pricing-ws-bundle/
+		</url>
+		<color>blue</color>
+	</job>
+	<job>
+		<name>dataimprover-email-bundle</name>
+		<url>http://ci.humaninference.com/job/dataimprover-email-bundle/</url>
+		<color>blue</color>
+	</job>
+	<job>
+		<name>dataimprover-jms2soap</name>
+		<url>http://ci.humaninference.com/job/dataimprover-jms2soap/</url>
+		<color>blue</color>
+	</job>
+	<job>
+		<name>dataimprover-name4-bundle</name>
+		<url>http://ci.humaninference.com/job/dataimprover-name4-bundle/</url>
+		<color>blue</color>
+	</job>
+	<job>
+		<name>dataimprover-nameWW-bundle</name>
+		<url>http://ci.humaninference.com/job/dataimprover-nameWW-bundle/
+		</url>
+		<color>blue</color>
+	</job>
+	<job>
+		<name>dataimprover-ondemand-dev-deploy</name>
+		<url>http://ci.humaninference.com/job/dataimprover-ondemand-dev-deploy/
+		</url>
+		<color>red</color>
+	</job>
+	<job>
+		<name>dataimprover-phone-bundle</name>
+		<url>http://ci.humaninference.com/job/dataimprover-phone-bundle/</url>
+		<color>blue</color>
+	</job>
+	<job>
+		<name>dataimprover-spring-util</name>
+		<url>http://ci.humaninference.com/job/dataimprover-spring-util/</url>
+		<color>blue</color>
+	</job>
+	<job>
+		<name>DB Build</name>
+		<url>http://ci.humaninference.com/job/DB%20Build/</url>
+		<color>blue</color>
+	</job>
+	<job>
+		<name>DB2 DB Build</name>
+		<url>http://ci.humaninference.com/job/DB2%20DB%20Build/</url>
+		<color>red</color>
+	</job>
+	<job>
+		<name>DB2CreateInstance</name>
+		<url>http://ci.humaninference.com/job/DB2CreateInstance/</url>
+		<color>red</color>
+	</job>
+	<job>
+		<name>DB2DatabaseOnMainframe</name>
+		<url>http://ci.humaninference.com/job/DB2DatabaseOnMainframe/</url>
+		<color>red</color>
+	</job>
+	<job>
+		<name>DB2ProcOnMainframe</name>
+		<url>http://ci.humaninference.com/job/DB2ProcOnMainframe/</url>
+		<color>red</color>
+	</job>
+	<job>
+		<name>Deploy EmailWW on demoWW</name>
+		<url>http://ci.humaninference.com/job/Deploy%20EmailWW%20on%20demoWW/
+		</url>
+		<color>blue</color>
+	</job>
+	<job>
+		<name>Deploy HIqww on devhiq</name>
+		<url>http://ci.humaninference.com/job/Deploy%20HIqww%20on%20devhiq/
+		</url>
+		<color>blue</color>
+	</job>
+	<job>
+		<name>Deploy MapReduce</name>
+		<url>http://ci.humaninference.com/job/Deploy%20MapReduce/</url>
+		<color>disabled</color>
+	</job>
+	<job>
+		<name>Deploy on demoWW</name>
+		<url>http://ci.humaninference.com/job/Deploy%2...

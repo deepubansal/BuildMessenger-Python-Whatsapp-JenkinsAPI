@@ -41,15 +41,6 @@ public class MessageSender implements Runnable {
                 String fileName = Configurations.TEMP_DIR + message.getFileName();
                 File file = new File(fileName);
                 int timeOut = 5;
-                // while (!file.exists()) {
-                // Thread.sleep(1000);
-                // if (--timeOut <= 0) {
-                // System.out.println("Message may not have sent.");
-                // receipts.add(message);
-                // return;
-                // }
-                // }
-                // timeOut = 5;
                 String lastStr = "";
                 Map<String, String> sentMessageIds = new HashMap<String, String>();
                 List<String> numbers = message.getNumbers();

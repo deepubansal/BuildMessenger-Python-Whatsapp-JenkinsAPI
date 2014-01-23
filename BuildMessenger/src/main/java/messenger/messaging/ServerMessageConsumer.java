@@ -25,7 +25,7 @@ public abstract class ServerMessageConsumer implements Runnable {
                 consume(take);
             } catch (Exception e) {
                 e.printStackTrace();
-                throw new RuntimeException(e);
+//                throw new RuntimeException(e);
             }
         }
         System.out.println("Killing " + this);

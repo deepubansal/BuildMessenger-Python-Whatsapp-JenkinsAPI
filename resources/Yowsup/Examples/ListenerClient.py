@@ -68,10 +68,6 @@ class WhatsappListenerClient:
       				time.sleep(1)
        				continue
 			#logfileName="/home/deepak/HI/WS_BuildMessenger/BuildMessenger/src/main/resources/log"
-			logfileName="%s/logs/commands.log"%self.resourceLocation
-			fobj=open(logfileName,"a+")
-			fobj.write("log:%s\n"%inputLine)
-			fobj.close()
 			if inputLine == "Done":
 				done = True
 				continue
@@ -81,6 +77,13 @@ class WhatsappListenerClient:
 			target=splits[1]
 			fobj=open(self.fileName,"r+")
 			message=fobj.read()
+			now_text = datetime.datetime.now().strftime("%c")
+			logfileName="%s/logs/To.log"%self.resourceLocation
+			logFileObj=open(logfileName,"a+")
+			logFileObj.write("------------------------------------\n")
+			logFileObj.write("To:%s:\t At: %s\nMessage:\n%s\n"%(target,now_text,message))
+			logFileObj.write("------------------------------------\n")
+			logFileObj.close()
 			fobj.seek(0)
 			fobj.truncate()
 			fobj.close()
@@ -154,5 +157,12 @@ class WhatsappListenerClient:
 		fobj=open(fileName,"w")
 		fobj.write(messageContent)
 		fobj.close()
+		logfileName="%s/logs/From.log"%self.resourceLocation
+		logFileObj=open(logfileName,"a+")
+		logFileObj.write("------------------------------------\n")
+		now_text = datetime.datetime.now().strftime("%c")
+		logFileObj.write("From:%s:\t At: %s\nMessage:\n%s\n"%(jid.split("@",1)[0],now_text,messageContent))
+		logFileObj.write("------------------------------------\n")
+		logFileObj.close()
 		print(os.path.abspath(fobj.name))
 		sys.stdout.flush()

@@ -26,15 +26,19 @@ public class FileUtil {
         return stringBuilder.toString();
     }
 
-    public static void writeToFile(String fileName, String content) {
+    public static void writeToFile(String fileName, String content, boolean append) {
         try {
             File file = new File(fileName);
+            if (!append) {
+            	file.delete();
+            }
             if (!file.exists()) {
                 file.createNewFile();
             }
+            
             FileWriter fileWritter = new FileWriter(file.getAbsolutePath(), true);
             BufferedWriter bufferWritter = new BufferedWriter(fileWritter);
-            bufferWritter.write(content);
+            bufferWritter.append(content);
 
             bufferWritter.close();
 

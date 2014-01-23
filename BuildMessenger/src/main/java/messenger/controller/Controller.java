@@ -19,7 +19,7 @@ public class Controller {
         Runtime.getRuntime().addShutdownHook(messageAPI);
         JobsDto jobsDto = Configurations.getJobs();
         List<JobDto> jobList = jobsDto.getJobDtos();
-        Map<String, StatusChangeHandler> jobStatusChangeHandlerMap = populateJobStatusChangeHandlers(messageAPI, jobList);
+        Map<JobDto, StatusChangeHandler> jobStatusChangeHandlerMap = populateJobStatusChangeHandlers(messageAPI, jobList);
         JobsAPI jobsAPI = JobsAPI.getInstance(jobStatusChangeHandlerMap);
         MessageReciever messageReciever = new JobMessageReciever(jobsAPI, messageAPI);
         messageAPI.registerMessageReciever(messageReciever);
@@ -45,12 +45,12 @@ public class Controller {
         }
     }
 
-    private static Map<String, StatusChangeHandler> populateJobStatusChangeHandlers(MessageAPI messageAPI, List<JobDto> jobList) {
-        Map<String, StatusChangeHandler> jobStatusHandlerMap = new HashMap<String, StatusChangeHandler>();
+    private static Map<JobDto, StatusChangeHandler> populateJobStatusChangeHandlers(MessageAPI messageAPI, List<JobDto> jobList) {
+        Map<JobDto, StatusChangeHandler> jobStatusHandlerMap = new HashMap<JobDto, StatusChangeHandler>();
         for (JobDto jobDto : jobList) {
             List<User> users = Configurations.getRegisteredUsers(jobDto);
             if (users != null && !users.isEmpty())
-                jobStatusHandlerMap.put(jobDto.getJobId(), new StatusChangeHandlerImpl(users, messageAPI));
+                jobStatusHandlerMap.put(jobDto, new StatusChangeHandlerImpl(users, messageAPI));
         }
         return jobStatusHandlerMap;
     }

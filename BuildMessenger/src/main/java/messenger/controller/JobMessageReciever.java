@@ -37,12 +37,16 @@ public class JobMessageReciever implements MessageReciever {
 			String[] split = message.split(":");
 			String command = split[0].trim();
 			String jobName = split[1].trim();
+			String parameters = null;
+			if (split.length >= 3) {
+				parameters = split[2];
+			}
 			Set<JobDto> jobList = user.getRegisteredJobs();
 			JobDto jobDto = new JobDto();
 			jobDto.setJobId(jobName);
 			if (!jobList.contains(jobDto))
 				sendError(originalMessage, buildUpdateHandler, jobList, user);
-			else if (!jobsAPI.executeJob(buildUpdateHandler, command, jobName))
+			else if (!jobsAPI.executeJob(buildUpdateHandler, command, jobName, parameters))
 				sendError(originalMessage, buildUpdateHandler, jobList, user);
 		} catch (Exception e) {
 			buildUpdateHandler.buildJobStatusUpdated("Error occurred: "

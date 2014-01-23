@@ -4,6 +4,7 @@ import static messenger.util.HttpUtil.getResponse;
 
 import java.io.IOException;
 import java.util.Date;
+import java.util.Map;
 
 import messenger.jobs.interfaces.BuildUpdateHandler;
 import messenger.jobs.interfaces.StatusChangeEvent;
@@ -15,7 +16,6 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.impl.client.HttpClientBuilder;
-import org.apache.http.util.EntityUtils;
 
 import com.sun.jndi.toolkit.url.UrlUtil;
 
@@ -27,22 +27,26 @@ public class Job {
     private Date lastRefreshTime;
     private Date lastSuccessStatusTime;
     private boolean isFailedJob = false;
-    
-//    private List<String> jobHistory = new LimitedArrayList<String>(Arrays.asList(new String[] { "" + (new Date()).getTime() + "," + status.name() }),
-//            20);
+    private boolean isParameterizedJob = false;
+
+    // private List<String> jobHistory = new
+    // LimitedArrayList<String>(Arrays.asList(new String[] { "" + (new
+    // Date()).getTime() + "," + status.name() }),
+    // 20);
     private StatusChangeHandler statusChangeHandler;
 
-    public Job(String jobId, StatusChangeHandler statusChangeHandler) {
+    public Job(String jobId, boolean isParameterizedJob, StatusChangeHandler statusChangeHandler) {
         this.jobId = jobId;
         this.statusChangeHandler = statusChangeHandler;
+        this.isParameterizedJob = isParameterizedJob;
     }
 
     public void refreshStatus() throws IOException {
-        String statusUrl = JenkinsConfiguration.getStatusUrl(UrlUtil.encode(jobId, "UTF-8"));
+        String[] statusUrl = JenkinsConfiguration.getStatusUrls(UrlUtil.encode(jobId, "UTF-8"));
         refreshStatus(statusUrl);
     }
 
-    private void refreshStatus(String statusUrl) throws IOException {
+    private void refreshStatus(String[] statusUrl) throws IOException {
         getStatusFromJenkins(statusUrl);
         lastRefreshTime = new Date();
         if (status.equals(JobStatus.FAILURE) && !isFailedJob) {
@@ -53,11 +57,12 @@ public class Job {
             statusChanged();
             isFailedJob = false;
         }
-//        System.out.println("Status updated from " + prevStatus.name() + " to " + status.name() + " at: " + lastRefreshTime);
+        // System.out.println("Status updated from " + prevStatus.name() +
+        // " to " + status.name() + " at: " + lastRefreshTime);
     }
 
-    private void getStatusFromJenkins(String statusUrl) throws IOException {
-        String stringStatus = getResponse(statusUrl);
+    private void getStatusFromJenkins(String[] statusUrl) throws IOException {
+        String stringStatus = getResponse(statusUrl, this.jobId);
         stringStatus = stringStatus.replaceAll("<color>", "").replaceAll("</color>", "");
         System.out.println(stringStatus);
         if (stringStatus.equals("blue_anime"))
@@ -77,8 +82,9 @@ public class Job {
     }
 
     private void statusChanged() {
-//        String prevStatusEntry = jobHistory.get(jobHistory.size() - 1);
-//        Date prevStatusDate = new Date(Long.valueOf(prevStatusEntry.split(",")[0]));
+        // String prevStatusEntry = jobHistory.get(jobHistory.size() - 1);
+        // Date prevStatusDate = new
+        // Date(Long.valueOf(prevStatusEntry.split(",")[0]));
         String message = null;
         if (status.equals(JobStatus.FAILURE)) {
             message = jobId + ": Failed on " + lastRefreshTime + ".  Last Success time: " + lastSuccessStatusTime;
@@ -88,36 +94,59 @@ public class Job {
         }
         StatusChangeEvent changeEvent = new StatusChangeEventImpl(jobId, null, status.name(), lastSuccessStatusTime, lastRefreshTime, message);
         statusChangeHandler.statusChanged(changeEvent);
-//        jobHistory.add(lastRefreshTime.getTime() + "," + status.name());
+        // jobHistory.add(lastRefreshTime.getTime() + "," + status.name());
     }
 
-    protected void buildJob(BuildUpdateHandler buildUpdateHandler) throws IOException, InterruptedException {
+    // public static void main(String[] args) {
+    // String resp = "";
+    // System.out.println(resp.substring(0, resp.length() > 1024 ? 1024:
+    // resp.length()));
+    // }
+
+    protected void buildJob(BuildUpdateHandler buildUpdateHandler, Map<String, String> params) throws IOException, InterruptedException {
         refreshStatus();
         if (getStatus().equals(JobStatus.PROGRESS)) {
             throw new IllegalStateException(jobId + " is already in progress");
         }
         else {
-            String buildUrl = JenkinsConfiguration.getBuildUrl(UrlUtil.encode(jobId, "UTF-8"));
+            String buildUrl = null;
+            if (!isParameterizedJob)
+                buildUrl = JenkinsConfiguration.getBuildUrl(UrlUtil.encode(jobId, "UTF-8"));
+            else
+                buildUrl = JenkinsConfiguration.getBuildWithParametersUrl(UrlUtil.encode(jobId, "UTF-8"), params);
+            System.out.println(buildUrl);
             HttpClient client = HttpClientBuilder.create().build();
             HttpUriRequest method = new HttpPost(buildUrl);
             HttpResponse response = client.execute(method);
             int statusCode = response.getStatusLine().getStatusCode();
-            String resp = EntityUtils.toString(response.getEntity());
-            if (statusCode != 201) {
-                throw new IllegalStateException("Jenkins Server returned error Code: " + statusCode + " and Response:" + resp.substring(0, 1024));
+            if (statusCode / 100 != 2 && statusCode / 100 != 3) {
+                // String resp = EntityUtils.toString(response.getEntity());
+                throw new IllegalStateException("Jenkins Server returned error Code: " + statusCode);
             }
             else {
-                Header responseHeader = response.getFirstHeader("Location");
-                System.out.println();
-                BuildListener buildListener = new BuildListener(responseHeader.getValue().trim(), buildUpdateHandler, this);
-                this.statusChangeHandler.removeUser(buildUpdateHandler.getUser());
-                Thread listener = new Thread(buildListener);
-                listener.start();
-                listener.join();
-                this.statusChangeHandler.addUser(buildUpdateHandler.getUser());
+                if (statusCode == 201) {
+                    Header responseHeader = response.getFirstHeader("Location");
+                    System.out.println(responseHeader.getValue());
+                    BuildListener buildListener = new BuildListener(responseHeader.getValue().trim(), buildUpdateHandler, this);
+                    this.statusChangeHandler.removeUser(buildUpdateHandler.getUser());
+                    Thread listener = new Thread(buildListener);
+                    listener.start();
+                    listener.join();
+                    this.statusChangeHandler.addUser(buildUpdateHandler.getUser());
+                }
+                else {
+                    buildUpdateHandler
+                            .buildJobStatusUpdated("Build started. But no build number returned from jenkins. You can check the status by sending \"Status:<Job Name>\" command."
+                                    + "Jenkins Server returned Code: " + statusCode);
+                    
+                }
             }
         }
 
+    }
+
+    protected void buildJob(BuildUpdateHandler buildUpdateHandler) throws IOException, InterruptedException {
+        buildJob(buildUpdateHandler, null);
     }
 
     public String getJobId() {
