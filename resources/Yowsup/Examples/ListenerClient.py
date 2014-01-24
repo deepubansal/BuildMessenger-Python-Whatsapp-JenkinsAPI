@@ -24,6 +24,9 @@ parentdir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 os.sys.path.insert(0,parentdir)
 import datetime, sys
 import time
+import traceback
+import threading
+from Examples.stracktrace import trace_start
 
 if sys.version_info >= (3, 0):
 	raw_input = input
@@ -33,6 +36,7 @@ from Yowsup.connectionmanager import YowsupConnectionManager
 class WhatsappListenerClient:
 
 	def startConnection(self):
+		trace_start("trace.html")
 		connectionManager = YowsupConnectionManager()
 		connectionManager.setAutoPong(True)
 
@@ -44,34 +48,52 @@ class WhatsappListenerClient:
 		self.signalsInterface.registerListener("auth_fail", self.onAuthFailed)
 		self.signalsInterface.registerListener("disconnected", self.onDisconnected)
 		self.signalsInterface.registerListener("receipt_messageSent", self.onMessageSent)
+		self.signalsInterface.registerListener("ping", self.onPing)
 		self.gotReceipt = 0
 		self.cm = connectionManager
 		self.fileName="defaultFileName"
 
 	def __init__(self, resourceLocation):
+		self.firstConnection = True
 		self.resourceLocation = resourceLocation
+		self.lock = threading.Lock()
 		self.startConnection()
+
+	def checkAndMakeConnection(self):
+		while not self.authed:
+			# print("Not Connected")
+			self.lock.acquire()
+			if not self.authorizing and not self.authed:
+				self.methodsInterface.call("auth_login", (self.username, self.password))
+				self.authorizing = True
+			# print("Authorizing")
+			time.sleep(1)
+			self.lock.release()
 
 	def login(self, username, password):
 		self.username = username
 		self.password =  password
 		self.authed = False
-		self.methodsInterface.call("auth_login", (username, password))
-		self.authorizing = True
 		#commandFile="/home/deepak/HI/WS_BuildMessenger/BuildMessenger/src/main/resources/commandFile"
 		commandFile="%s/tmp/commandFile"%self.resourceLocation
 		self.commandFileObj=open(commandFile)
 		done = False
+		self.authorizing = False
+		self.checkAndMakeConnection()
 		while not done:
 			inputLine = self.commandFileObj.readline()
 			if not inputLine:
-      				time.sleep(1)
-       				continue
+				time.sleep(1)
+				self.checkAndMakeConnection()
+				continue
 			#logfileName="/home/deepak/HI/WS_BuildMessenger/BuildMessenger/src/main/resources/log"
 			if inputLine == "Done":
 				done = True
+				self.methodsInterface.call("disconnect",("Exiting"))
 				continue
+			# print(inputLine)
 			inputLine=inputLine.split("\n",1)[0]
+			# print(inputLine)
 			splits=inputLine.split('|',1)
 			self.fileName="%s/tmp/%s"%(self.resourceLocation,splits[0])
 			target=splits[1]
@@ -94,23 +116,20 @@ class WhatsappListenerClient:
 				jids = ["%s@s.whatsapp.net" % t for t in target.split(',')]
 
 			#print(jids)
-			while not self.authed:
-				if not self.authorizing:
-					self.startConnection()
-					self.methodsInterface.call("auth_login", (username, password))
-					self.authorizing = True
-				time.sleep(1)
-			self.methodsInterface.call("ready")
 			length = len(jids)
 			i = 0
 			while i < length:
+				self.checkAndMakeConnection()
+				# print("Sending Message")
 				self.methodsInterface.call("message_send", (jids[i], message))
 				i+=1
 			#print("Sent message")
 			#if self.waitForReceipt:
 			timeout = 5
 			t = 0;
+			self.lock.acquire()
 			self.gotReceipt = 0
+			self.lock.release()
 			while t < timeout and self.gotReceipt < length:
 				time.sleep(1)
 				t+=1
@@ -123,23 +142,37 @@ class WhatsappListenerClient:
 		self.commandFileObj.close()
 
 	def onAuthSuccess(self, username):
-		print("Authed %s" % username)
-		sys.stdout.flush()
-		self.methodsInterface.call("ready")
+		if self.firstConnection:
+			print("Authed %s" % username)
+			sys.stdout.flush()
+			self.firstConnection = False
+		# self.methodsInterface.call("ready")
+		self.lock.acquire()
 		self.authed = True
 		self.authorizing = False
+		self.lock.release()
+
 
 	def onAuthFailed(self, username, err):
+		self.lock.acquire()
 		print("Auth Failed!")
 		sys.stdout.flush()
-		sys.exit(1)
+		self.authed = True
+		self.authorizing = False
+		self.lock.release()
 
 	def onDisconnected(self, reason):
-		print("Disconnected because %s" %reason)
+		self.lock.acquire()
+		if reason == "Exiting":
+			print("Disconnected because %s" %reason)
+		# traceback.print_stack()
 		sys.stdout.flush()
 		self.authed=False
+		self.authorizing = False
+		self.lock.release()
 
 	def onMessageSent(self, jid, messageId):
+		print("Message Sent")
 		reportContent="Jid_MessageID:%s_%s\n"%(jid,messageId)
 		fobj=open(self.fileName,"a+")
 		fobj.write(reportContent)
@@ -147,11 +180,11 @@ class WhatsappListenerClient:
 		self.gotReceipt+=1
 
 	def onMessageReceived(self, messageId, jid, messageContent, timestamp, wantsReceipt, pushName, isBroadCast):
-##		print("On messageReceived ")
-##		print("TimeStamp:%s"%timestamp)
-##		sentTime=datetime.datetime.fromtimestamp(timestamp)
-##		print(sentTime)
-##		print(sentTime.strftime('%s'))
+	##		print("On messageReceived ")
+	##		print("TimeStamp:%s"%timestamp)
+	##		sentTime=datetime.datetime.fromtimestamp(timestamp)
+	##		print(sentTime)
+	##		print(sentTime.strftime('%s'))
 		self.methodsInterface.call("message_ack", (jid, messageId))
 		fileName="%s/tmp/%s_%s_%s"%(self.resourceLocation,timestamp,jid.split("@",1)[0],messageId)
 		fobj=open(fileName,"w")
@@ -166,3 +199,6 @@ class WhatsappListenerClient:
 		logFileObj.close()
 		print(os.path.abspath(fobj.name))
 		sys.stdout.flush()
+
+	def onPing(pingId):
+		self.methodsInterface.call("pong", pingId)
