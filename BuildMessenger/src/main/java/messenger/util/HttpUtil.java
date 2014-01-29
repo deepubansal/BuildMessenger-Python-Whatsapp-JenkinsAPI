@@ -43,7 +43,7 @@ public class HttpUtil {
                     String evaluate = "";
                     try {
                         evaluate = xPath.evaluate("/hudson/job[name='" + jobName + "']/color", inputSource);
-                        return evaluate;
+                        status = evaluate.trim();
                     } catch (XPathExpressionException e) {
                         e.printStackTrace();
                     }
